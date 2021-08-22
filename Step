@@ -1,0 +1,28 @@
+# Item list view
+Display an empty table
+Display list of item in the table
+Toggle item
+Slide to delete
+Display add button
+
+# Add item view
+Navigate to a new table view when tap add button (Add item view)
+Display cancel button
+Display done button
+Tap cancel or done button go back to item list
+Add text input in Add item view
+Add focus to text input
+Disable done button when text is empty
+Disable done button on keyboard when text is empty
+Enable clear text button on text input
+Add new item into the list
+
+# Edit item
+Adjust view, checkmark on the left and display detail disclosure button
+Tap to edit
+Enable done button
+Update item (Delegate)
+
+# Persist Data
+Save data (FileManager)
+Load data

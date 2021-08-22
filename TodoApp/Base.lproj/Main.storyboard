@@ -16,27 +16,37 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="TodoItem" id="9Fp-2c-sE2">
-                                <rect key="frame" x="0.0" y="24.5" width="414" height="53"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="detailDisclosureButton" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TodoItem" id="2E8-3c-TDX">
+                                <rect key="frame" x="0.0" y="24.5" width="414" height="75"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9Fp-2c-sE2" id="aU4-N0-Ze5">
-                                    <rect key="frame" x="0.0" y="0.0" width="373.5" height="53"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2E8-3c-TDX" id="esD-2n-FJw">
+                                    <rect key="frame" x="0.0" y="0.0" width="356" height="75"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PFL-ba-l1f">
-                                            <rect key="frame" x="16" y="16" width="341.5" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dVO-be-zrT">
+                                            <rect key="frame" x="50.5" y="27" width="281.5" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1001" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="dEr-zw-4nr">
+                                            <rect key="frame" x="16" y="18" width="18.5" height="39.5"/>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="PFL-ba-l1f" secondAttribute="trailing" constant="16" id="QmT-eU-EpO"/>
-                                        <constraint firstAttribute="bottom" secondItem="PFL-ba-l1f" secondAttribute="bottom" constant="16" id="ZWe-Vw-Ku9"/>
-                                        <constraint firstItem="PFL-ba-l1f" firstAttribute="leading" secondItem="aU4-N0-Ze5" secondAttribute="leading" constant="16" id="bJy-bu-Bmp"/>
-                                        <constraint firstItem="PFL-ba-l1f" firstAttribute="top" secondItem="aU4-N0-Ze5" secondAttribute="top" constant="16" id="s25-bg-prG"/>
+                                        <constraint firstItem="dVO-be-zrT" firstAttribute="leading" secondItem="dEr-zw-4nr" secondAttribute="trailing" constant="16" id="48G-OC-7Oy"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="dVO-be-zrT" secondAttribute="bottom" constant="16" id="4Iw-Mr-VHl"/>
+                                        <constraint firstItem="dEr-zw-4nr" firstAttribute="leading" secondItem="esD-2n-FJw" secondAttribute="leading" constant="16" id="4OZ-M1-7ke"/>
+                                        <constraint firstItem="dVO-be-zrT" firstAttribute="top" secondItem="esD-2n-FJw" secondAttribute="topMargin" constant="16" id="5MB-aM-iW8"/>
+                                        <constraint firstItem="dEr-zw-4nr" firstAttribute="top" secondItem="esD-2n-FJw" secondAttribute="top" constant="16" id="7j5-l1-RMj"/>
+                                        <constraint firstAttribute="bottom" secondItem="dEr-zw-4nr" secondAttribute="bottom" constant="16" id="Jox-Wl-iMW"/>
+                                        <constraint firstItem="dVO-be-zrT" firstAttribute="leading" secondItem="dEr-zw-4nr" secondAttribute="trailing" constant="16" id="uT0-IP-CsZ"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="dVO-be-zrT" secondAttribute="trailing" constant="16" id="yJy-kC-oQ4"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="AX7-Pm-E0x" kind="show" identifier="EditItem" trigger="accessoryAction" id="WB2-t4-nJ9"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -47,19 +57,19 @@
                     <navigationItem key="navigationItem" title="Todo List" id="gQR-qF-x6b">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="UBo-4s-vlB">
                             <connections>
-                                <segue destination="AX7-Pm-E0x" kind="show" id="uZF-2F-egp"/>
+                                <segue destination="AX7-Pm-E0x" kind="show" identifier="AddItem" id="uZF-2F-egp"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xEA-kg-R7G" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1383" y="31"/>
+            <point key="canvasLocation" x="1382.608695652174" y="30.803571428571427"/>
         </scene>
         <!--Add Item-->
         <scene sceneID="CJ8-c3-CmF">
             <objects>
-                <tableViewController id="AX7-Pm-E0x" customClass="AddTodoTableViewController" customModule="TodoApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="AX7-Pm-E0x" customClass="AddTodoViewController" customModule="TodoApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="P8Q-ou-IuU">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -140,7 +150,11 @@
             <point key="canvasLocation" x="434.78260869565219" y="30.803571428571427"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="WB2-t4-nJ9"/>
+    </inferredMetricsTieBreakers>
     <resources>
+        <image name="checkmark" catalog="system" width="128" height="114"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

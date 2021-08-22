@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TodoItem {
+class TodoItem: NSObject, Codable {
     var text: String
     var done: Bool
 
@@ -17,7 +17,7 @@ class TodoItem {
     }
 }
 
-class TodoListViewController: UITableViewController {
+class TodoListViewController: UITableViewController, AddTodoViewControllerDelegate {
 
     var items: [TodoItem] = {
         var data = [TodoItem]()
@@ -32,14 +32,7 @@ class TodoListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = true
-    }
-    
-    @IBAction func addItem(_ sender: Any) {
-        let index = items.count
-        items.append(TodoItem(text: "New Item!"))
-        let indexPath = IndexPath(row: index, section: 0)
-        let indexPaths = [indexPath]
-        tableView.insertRows(at: indexPaths, with: .automatic)
+        loadTodolist()
     }
 
     // MARK: - Table view data source
@@ -70,6 +63,7 @@ class TodoListViewController: UITableViewController {
 
         let indexPaths = [indexPath]
         tableView.deleteRows(at: indexPaths, with: .automatic)
+        saveTodolist()
     }
 
     func configureText(for cell: UITableViewCell, with item: TodoItem) {
@@ -78,11 +72,97 @@ class TodoListViewController: UITableViewController {
     }
 
     func configureCheckmark(for cell: UITableViewCell, with item: TodoItem) {
+        let checkmark = cell.viewWithTag(1001) as! UIImageView
         if item.done {
-            cell.accessoryType = .checkmark
+            checkmark.isHidden = false
         } else {
-            cell.accessoryType = .none
+            checkmark.isHidden = true
         }
     }
-}
 
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AddItem" {
+            let controller  = segue.destination as! AddTodoViewController
+            controller.delegate = self
+        } else if segue.identifier == "EditItem" {
+            let controller  = segue.destination as! AddTodoViewController
+            controller.delegate = self
+
+            if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
+                controller.itemToEdit = items[indexPath.row]
+            }
+        }
+    }
+
+
+    // MARK: - Add Todo
+
+    func addTodoViewControllerDidCancel(_ controller: AddTodoViewController) {
+        navigationController?.popViewController(animated: true)
+    }
+
+    func addTodoViewController(_ controller: AddTodoViewController, didFinishAdding item: TodoItem) {
+        let newRowIndex = items.count
+        items.append(item)
+
+        let indexPath = IndexPath(row: newRowIndex, section: 0)
+        let indexPaths = [indexPath]
+        tableView.insertRows(at: indexPaths, with: .automatic)
+        navigationController?.popViewController(animated: true)
+        saveTodolist()
+    }
+
+    func addTodoViewController(_ controller: AddTodoViewController, didFinishEditing item: TodoItem) {
+        if let row = items.firstIndex(of: item) {
+            if let cell = tableView.cellForRow(at: IndexPath(row: row, section: 0)) {
+                configureText(for: cell, with: item)
+            }
+        }
+        navigationController?.popViewController(animated: true)
+        saveTodolist()
+    }
+
+    // MARK: - Save Data
+
+    func saveTodolist() {
+        let encoder = PropertyListEncoder()
+        do {
+            let data = try encoder.encode(items)
+            try data.write(
+                to: dataFilePath(),
+                options: Data.WritingOptions.atomic
+            )
+        } catch {
+            print("Error encoding item array: \(error.localizedDescription)")
+        }
+    }
+
+    func loadTodolist() {
+        let path = dataFilePath()
+        if let data = try? Data(contentsOf: path) {
+            let decoder = PropertyListDecoder()
+            do {
+                items = try decoder.decode(
+                    [TodoItem].self,
+                    from: data
+                )
+            } catch {
+                print("Error decoding item array: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    func documentsDirectory() -> URL {
+        let paths = FileManager.default.urls(
+            for: .documentDirectory,
+            in: .userDomainMask
+        )
+        return paths[0]
+    }
+
+    func dataFilePath() -> URL {
+        return documentsDirectory().appendingPathComponent("Todolist.plist")
+    }
+
+}
