@@ -26,3 +26,11 @@ Update item (Delegate)
 # Persist Data
 Save data (FileManager)
 Load data
+
+# Group List
+Add new table view controller for group
+Rearrage segue flow
+Dislay hard code group
+Add new group
+Edit group
+Persist data
